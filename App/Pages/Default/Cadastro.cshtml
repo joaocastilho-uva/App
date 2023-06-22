@@ -1,0 +1,50 @@
+﻿@page
+
+@model App.Pages.Default.CadastroModel
+
+@{
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-6">
+
+                    <h1 class="mt-5 mb-3 h3">Cadastre-se</h1>
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" asp-for="CadastroViewModel.Nome" required />
+                            <span class="text-danger" asp-validation-for="CadastroViewModel.Nome"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" asp-for="CadastroViewModel.Email" required>
+                            <span class="text-danger" asp-validation-for="CadastroViewModel.Email"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" class="form-control" asp-for="CadastroViewModel.Senha" required minlength="6" />
+                            <span class="text-danger" asp-validation-for="CadastroViewModel.Senha"></span>
+                        </div>
+
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <button id="btnSearch" type="submit" class="btn btn-success btn-md center-block" Style="width: 100px;">Cadastrar</button>
+                                    <button id="btnClear" class="btn btn-danger btn-md center-block" Style="width: 100px;">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+

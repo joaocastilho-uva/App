@@ -1,0 +1,201 @@
+﻿@page "{produtoId:Guid}"
+
+@model App.Pages.Admin.VisualizacaoProdutoModel
+
+@using App.Enums;
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<IdentityUser> userManager
+
+@{
+    ViewData["Title"] = "Visualizar Produto";
+}
+
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-3 h3">Visualizar Produto</h1>
+
+        <div class="hr-sect">GERAL</div>
+
+        <form method="post">
+            <section>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Id</span>
+                    <input type="text" class="form-control" id="id" aria-label="Id" asp-for="ProdutoViewModel.Id" readonly>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Nome</span>
+                    <input type="text" class="form-control" id="nome" aria-label="Nome" asp-for="ProdutoViewModel.Nome" readonly>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <div class="card">
+                            @if (!string.IsNullOrWhiteSpace(Model.ProdutoViewModel.ImagemUrl))
+                            {
+                                <img src="@Model.ProdutoViewModel.ImagemUrl" id="imagemDisplay" style="display:block" />
+                            }
+                            else
+                            {
+                                <img src="https://dummyimage.com/500x600/000/fff&text=500x600" id="imagemDisplay" style="display:block" />
+                            }
+
+                            <div class="card-body">
+                                <input class="mt-2" type="file" id="escolherImagem" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <div id="froala-editor">
+                            <textarea class="form-control" id="descricao" asp-for="ProdutoViewModel.Descricao" placeholder="Descrição" style="height: 515px;" disabled></textarea>
+                        </div>
+
+                        <div class="input-group mt-3">
+                            <span class="input-group-text">Imagem URL</span>
+                            <input type="text" class="form-control" aria-label="Imagem URL" id="imagemUrl" asp-for="ProdutoViewModel.ImagemUrl" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="hr-sect">ESPECIFICAÇÃO</div>
+
+            <section>
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Valor Total</span>
+                            <span class="input-group-text">R$</span>
+                            <input type="number" class="form-control" id="valorTotal" asp-for="ProdutoViewModel.ValorTotal" readonly>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text" for="paisOrigem">País origem</label>
+
+                            @{
+                                var itens = new List<SelectListItem>();
+
+                                itens = Enum.GetValues(typeof(Pais)).Cast<Pais>().ToList().ConvertAll(a =>
+                                {
+                                    return new SelectListItem()
+                                    {
+                                        Text = a.ObterDescricao(),
+                                        Value = a.ToString(),
+                                        Selected = a == Model.ProdutoViewModel.PaisOrigem
+                                    };
+                                });
+
+                                <select class="form-select" id="paisOrigem" asp-items="@itens" asp-for="ProdutoViewModel.PaisOrigem" disabled>
+                                    <option selected>Nenhum...</option>
+                                </select>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <div class="input-group">
+                            <label class="input-group-text" for="categoria">Categoria</label>
+
+                            @{
+                                itens = new List<SelectListItem>();
+
+                                itens = Enum.GetValues(typeof(Categoria)).Cast<Categoria>().Skip(1).ToList().ConvertAll(a =>
+                                {
+                                    return new SelectListItem()
+                                    {
+                                        Text = a.ObterDescricao(),
+                                        Value = a.ToString(),
+                                        Selected = a == Model.ProdutoViewModel.Categoria
+                                    };
+                                });
+
+                                <select class="form-select" id="categoria" asp-items="@itens" asp-for="ProdutoViewModel.Categoria" disabled>
+                                    <option selected>Nenhum...</option>
+                                </select>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Quantidade</span>
+                            <input type="number" class="form-control" id="quantidade" asp-for="ProdutoViewModel.QuantidadeTotal" readonly>
+                            <span class="text-danger" asp-validation-for="ProdutoViewModel.QuantidadeTotal"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Comprimento</span>
+                            <input type="number" class="form-control" id="comprimento" step="any" asp-for="ProdutoViewModel.Comprimento" readonly>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Largura</span>
+                            <input type="number" class="form-control" id="largura" step="any" asp-for="ProdutoViewModel.Largura" readonly>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Altura</span>
+                            <input type="number" class="form-control" id="altura" step="any" asp-for="ProdutoViewModel.Altura" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="hr-sect">AUDITORIA</div>
+
+            <section>
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Usuário inclusão</span>
+                            <input type="text" readonly class="form-control" value="@userManager.FindByIdAsync(Model.ProdutoViewModel.UsuarioInclusao.ToString()).Result.UserName" id="usuarioInclusao" asp-for="ProdutoViewModel.UsuarioInclusao">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Usuário alteração</span>
+
+                            @if (Model.ProdutoViewModel.UsuarioAlteracao.HasValue)
+                            {
+                                <input type="text" class="form-control" id="usuarioAlteracao" value="@userManager.FindByIdAsync(Model.ProdutoViewModel.UsuarioAlteracao.ToString()).Result.UserName" asp-for="ProdutoViewModel.UsuarioAlteracao" readonly>
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" id="usuarioAlteracao" asp-for="ProdutoViewModel.UsuarioAlteracao" readonly>
+                            }
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Data inclusão</span>
+                            <input type="datetime" class="form-control" value="@Model.ProdutoViewModel.DataInclusao?.ToString("dd/MM/yyyy HH:mm:ss")" id="dataInclusao" asp-for="ProdutoViewModel.DataInclusao" readonly>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Data alteração</span>
+
+                            @if (Model.ProdutoViewModel.DataAlteracao.HasValue)
+                            {
+                                <input type="datetime" value="@Model.ProdutoViewModel.DataAlteracao?.ToString("dd/MM/yyyy HH:mm:ss")" class="form-control" id="dataAlteracao" asp-for="ProdutoViewModel.DataAlteracao" readonly>
+                            }
+                            else
+                            {
+                                <input type="datetime" class="form-control" id="dataAlteracao" asp-for="ProdutoViewModel.DataAlteracao" readonly>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <a href="/admin/gerenciamentoproduto/@Model.ProdutoViewModel.StandId" class="btn btn-primary btn-md center-block" id="btnVoltar" Style="width: 100px;" role="button">Voltar</a>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</body>

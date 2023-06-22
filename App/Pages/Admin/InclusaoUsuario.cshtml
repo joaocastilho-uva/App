@@ -1,0 +1,62 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.InclusaoUsuarioModel
+
+@{
+    ViewData["Title"] = "Incluir Usuário";
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+
+                    <h1 class="mt-5 mb-3 h3">Incluir Usuário</h1>
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" asp-for="UsuarioViewModel.Nome" required />
+                            <span class="text-danger" asp-validation-for="UsuarioViewModel.Nome"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" asp-for="UsuarioViewModel.Email" required>
+                            <span class="text-danger" asp-validation-for="UsuarioViewModel.Email"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" class="form-control" asp-for="UsuarioViewModel.Senha" required minlength="6" />
+                            <span class="text-danger" asp-validation-for="UsuarioViewModel.Senha"></span>
+                        </div>
+
+                        <input type="hidden" asp-for="StandId">
+
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" asp-for="UsuarioViewModel.Admin">
+                                <label class="form-check-label" for="defaultCheck2">
+                                    Admin
+                                </label>
+                            </div>
+                        }
+                        <div>
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <button id="btnCadastrar" type="submit" class="btn btn-success btn-md center-block" Style="width: 100px;">Cadastrar</button>
+                                    <button id="btnCencelar" class="btn btn-danger btn-md center-block" Style="width: 100px;">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

@@ -1,0 +1,37 @@
+﻿@page
+@model App.Pages.Default.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<body>
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+
+            <partial name="_Notificacao"></partial>
+
+            <h1 class="mt-5 mb-3 h3">Login</h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">E-mail</label>
+                    <input type="text" class="form-control" asp-for="LoginViewModel.Nome" required />
+                    <span class="text-danger" asp-validation-for="LoginViewModel.Nome"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-control" asp-for="LoginViewModel.Senha" required minlength="6" />
+                    <span class="text-danger" asp-validation-for="LoginViewModel.Senha"></span>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn bg-success text-dark">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+

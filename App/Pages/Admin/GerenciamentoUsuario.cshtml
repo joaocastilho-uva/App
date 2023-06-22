@@ -1,0 +1,75 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.GerenciamentoUsuarioModel
+
+@{
+    ViewData["Title"] = "Gerenciar Usuários";
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+
+        <div class="container mt-3 mb-3">
+            <a href="/admin/inclusaousuario/@Model.StandId" class="btn btn-success btn-md center-block" role="button">Incluir Usuário</a>
+        </div>
+
+        @if (Model.Usuarios.Any())
+        {
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var indice = 1;
+
+                            @foreach (var usuario in Model.Usuarios)
+                            {
+                                <tr>
+                                    <td>@indice</td>
+                                    <td>@usuario.Id</td>
+                                    <td>@usuario.UserName</td>
+                                    <td>
+                                        <a href="/admin/visualizacaousuario/@usuario.Id" role="button" class="btn" title="Visualizar">
+                                            <i class="fa fa-eye fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/edicaousuario/@usuario.Id" role="button" class="btn" title="Editar">
+                                            <i class="fa fa-pen fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form method="post">
+                                            <input type="hidden" asp-for="StandId">
+                                            <button id="btnExcluir" class="btn" asp-page-handler="delete" type="submit" name="id" value="@usuario.Id" title="Excluir">
+                                                <i class="fa fa-times fa-fw text-dark"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                indice++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <p>Não foram encontrados usuários cadastrados.</p>
+            </div>
+        }
+    </section>
+</body>

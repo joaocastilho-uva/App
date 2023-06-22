@@ -1,0 +1,48 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.EdicaoStandModel
+
+@{
+    ViewData["Title"] = "Editar Stand";
+}
+
+<body>
+    <partial name="_Notificacao"></partial>
+
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+
+                <h1 class="mt-3 mb-3 h3">Editar Stand</h1>
+                <div class="hr-sect">GERAL</div>
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Id</label>
+                        <input type="text" class="form-control" id="id" asp-for="StandViewModel.Id" readonly />
+                        <span class="text-danger" asp-validation-for="StandViewModel.Id"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" asp-for="StandViewModel.Nome" required />
+                        <span class="text-danger" asp-validation-for="StandViewModel.Nome"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Localização</label>
+                        <input type="text" class="form-control" id="localizacao" asp-for="StandViewModel.Localizacao" required />
+                        <span class="text-danger" asp-validation-for="StandViewModel.Localizacao"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <button id="btnSearch" class="btn btn-success btn-md center-block" Style="width: 100px;">Salvar</button>
+                            <a href="/admin/gerenciamentostand" id="btnCancelar" class="btn btn-danger btn-md center-block" Style="width: 100px;" role="button">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>

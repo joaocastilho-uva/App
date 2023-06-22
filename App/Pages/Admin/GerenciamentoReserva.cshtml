@@ -1,0 +1,59 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.GerenciamentoReservaModel
+
+@{
+    ViewData["Title"] = "Gerenciar Reservas";
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+
+        @if (Model.ItensReserva != null && Model.ItensReserva.Any())
+        {
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var indice = 1;
+                            <input type="hidden" asp-for="StandId">
+
+                            @foreach (var reserva in Model.ItensReserva)
+                            {
+                                <tr>
+                                    <td>@indice</td>
+                                    <td>@reserva.Id</td>
+                                    <td>@reserva.ProdutoId</td>
+                                    <td>@reserva.Quantidade</td>
+                                    <td>@reserva.Valor</td>
+                                    <td>
+                                        <a href="/admin/visualizacaostand/@reserva.Id" role="button" class="btn" title="Visualizar">
+                                            <i class="fa fa-eye fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/edicaostand/@reserva.Id" role="button" class="btn" title="Finalizar">
+                                            <i class="fa fa-check fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                indice++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
+</body>

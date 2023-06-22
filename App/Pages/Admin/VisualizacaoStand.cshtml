@@ -1,0 +1,57 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.VisualizacaoStandModel
+
+@{
+    ViewData["Title"] = "Visualizar Stand";
+}
+
+<body>
+    <partial name="_Notificacao"></partial>
+
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+                <h1 class="mt-3 mb-3 h3">Visualizar Stand</h1>
+                <div class="hr-sect">GERAL</div>
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Id</label>
+                        <input type="text" class="form-control" id="id" asp-for="StandViewModel.Id" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Situação</label>
+
+                        @if (Model.StandViewModel.Ativo)
+                        {
+                            <input type="text" class="form-control bg-opacity-50 bg-success" id="situacao" value="Ativo" asp-for="StandViewModel.Ativo" readonly />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control bg-opacity-50 bg-danger" id="situacao" value="Inativo" asp-for="StandViewModel.Ativo" readonly />
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" asp-for="StandViewModel.Nome" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Localização</label>
+                        <input type="text" class="form-control" id="localizacao" asp-for="StandViewModel.Localizacao" readonly />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <a href="/admin/gerenciamentostand" class="btn btn-primary btn-md center-block" id="btnVoltar" Style="width: 100px;" role="button">Voltar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>

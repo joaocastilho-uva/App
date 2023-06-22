@@ -1,0 +1,121 @@
+﻿@page
+
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<body>
+    <!-- Destaques -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <a href="/default/catalogo"><img class="img-fluid" src="/assets/img/Abajur.png" alt=""></a>
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b>Abajur Árvore da Vida</b></h1>
+                                <h3 class="h2">Origem: Indonésia</h3>
+                                <p>
+                                    Este abajur artesanal em madeira traz consigo a energia positiva e inspiradora, criando uma atmosfera acolhedora e harmoniosa na sua decoração. A
+
+                                    Árvore da Vida é um símbolo universal de conexão, crescimento e renovação. Suas raízes simbolizam uma base sólida e ancestral, enquanto seus galhos se estendem em direção ao céu, representando uma busca constante por conhecimento e expansão.
+
+                                    Leve para sua casa essa arte com design entalhado que permite que a luz se espalhe de maneira sutil e proporciona um jogo de sombras encantador, criando uma atmosfera relaxante e convidativa para sua casa.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <a href="/default/catalogo"><img class="img-fluid" src="/assets/img/Quadro_1.png" alt=""></a>
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1 text-success"><b>Tela Trabalhadores Balineses</b></h1>
+                                <h3 class="h2">Origem: Indonésia</h3>
+                                <p>
+                                    Pintura em tela 40x30cm elaborada por artesãos da Ilha de Bali, cuja imagem representa uma comunidade da Indonésia durante seu período de trabalho, além de manifestar o cooperativismo entre todos os indivíduos, os quais colhem verduras e frutas, posteriormente levando em suas cestas vestindo chapéus akatsukis. Este artesanato pintado à mão com uma ampla cartela de cores é uma verdadeira obra de arte que através dos detalhes exibe a riqueza cultural da Ilha.
+
+                                    Tela com chassi de madeira, pronta para pendurar.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <a href="/default/catalogo"><img class="img-fluid" src="/assets/img/Naja.png" alt=""></a>
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1 text-success"><b>Escultura Naja em Madeira</b></h1>
+                                <h3 class="h2">Origem</h3>
+                                <p>
+                                    Escultura de Serpente para decoração de interiores, entalhada à mão em madeira por artistas de Bali.
+                                    No hinduísmo, a energia vital que percorre e equilibra os sete chakras no corpo sutil é simbolizada com a imagem de uma cobra, a Kundalini. Inserir este animal na decoração atrairá seu potencial de cura e seus poderes de transformação e criação.
+
+                                    Você se impressionará com a riqueza de detalhes!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    
+    <!-- Detalhes -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h3">Decore sua casa com bom gosto e torne seu ambiente um lugar único com nossas artes decorativas!</h1>
+                <p>
+                    Arte & Conexão são nossos meios de expressão; integram a essência dos nossos produtos e a riqueza cultural que há no mundo àquilo que somos.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="/default/catalogo"><img src="/assets/img/Mascara_etnica_1.png" class="rounded-3 img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">Últimas unidades</h5>
+                <p class="text-center"><a class="btn btn-success" href="/default/catalogo">Conferir</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="/default/catalogo"><img src="/assets/img/Vaso_balines.png" class="rounded-3 img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Peças exclusivas</h2>
+                <p class="text-center"><a class="btn btn-success" href="/default/catalogo">Conferir</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="/default/catalogo"><img src="/assets/img/Escultura_dragao.png" class="rounded-3 img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Mais desejados</h2>
+                <p class="text-center"><a class="btn btn-success" href="/default/catalogo">Conferir</a></p>
+            </div>
+        </div>
+    </section>
+
+    @*https://dummyimage.com/500x500/000/fff.jpg&text=500x500*@
+    @*https://dummyimage.com/500x500/000/fff.jpg&text=500x500*@
+</body>

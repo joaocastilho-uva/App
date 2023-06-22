@@ -1,0 +1,86 @@
+﻿@page
+
+@model App.Pages.Admin.GerenciamentoStandModel
+
+@{
+    ViewData["Title"] = "Gerenciamento de Stand";
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+
+        <div class="container mt-3 mb-3">
+            <a href="inclusaostand" class="btn btn-success" role="button">Incluir Stand</a>
+        </div>
+
+        @if (Model.Stands != null && Model.Stands.Any())
+        {
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var indice = 1;
+
+                            @foreach (var stand in Model.Stands)
+                            {
+                                <tr>
+                                    <td>@indice</td>
+                                    <td>@stand.Id</td>
+                                    <td>@stand.Nome</td>
+                                    <td>
+                                        <a href="/admin/visualizacaostand/@stand.Id" role="button" class="btn" title="Visualizar">
+                                            <i class="fa fa-eye fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/edicaostand/@stand.Id" role="button" class="btn" title="Editar">
+                                            <i class="fa fa-pen fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/gerenciamentousuario/@stand.Id" role="button" class="btn" title="Gerenciar usuários">
+                                            <i class="fa fa-user fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/gerenciamentoproduto/@stand.Id" role="button" class="btn" title="Gerenciar produtos">
+                                            <i class="fa fa-cube fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/gerenciamentoreserva/@stand.Id" role="button" class="btn" title="Gerenciar reservas">
+                                            <i class="fa fa-shopping-basket fa-fw text-dark"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form method="post">
+                                            <button type="submit" class="btn" asp-page-handler="ativardesativar" name="id" value="@stand.Id" title="Ativar/Desativar">
+                                                <i class="fa fa-power-off fa-fw text-dark"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                indice++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
+</body>

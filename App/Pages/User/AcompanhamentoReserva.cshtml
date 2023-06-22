@@ -1,0 +1,68 @@
+﻿@page
+
+@model App.Pages.User.AcompanhamentoReservaModel
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
+
+@{
+    ViewData["Title"] = "Reservas";
+}
+
+<body>
+    <section>
+        <partial name="_Notificacao"></partial>
+
+        @if (signInManager.IsSignedIn(User))
+        {
+            @if (Model.Reservas.Any())
+            {
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Id</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var indice = 1;
+
+                                @foreach (var reserva in Model.Reservas)
+                                {
+                                    <tr>
+                                        <td>@indice</td>
+                                        <td>@reserva.Id</td>
+                                        <td>@reserva.DataInclusao</td>
+                                        <td>@reserva.Status</td>
+                                        <td>@reserva.ValorTotal</td>
+                                        <td>
+                                            <a href="/admin/visualizacaousuario/@reserva.Id" role="button" class="btn" title="Visualizar">
+                                                <i class="fa fa-eye fa-fw text-dark"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <form method="post">
+                                                <button id="btnExcluir" class="btn" asp-page-handler="delete" type="submit" name="id" value="@reserva.Id" title="Excluir">
+                                                    <i class="fa fa-times fa-fw text-dark"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    indice++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+    </section>
+</body>

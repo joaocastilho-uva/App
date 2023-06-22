@@ -1,0 +1,196 @@
+﻿@page "{categoria:int}"
+
+@using App.Enums;
+
+@model App.Pages.Default.CatalogoModel
+
+@{
+    ViewData["Title"] = "Catálogo";
+}
+
+<body>
+    <partial name="_Notificacao"></partial>
+
+    @if (Model.Produtos.Any())
+    {
+        <div class="container py-5">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <h1 class="h2 pb-4">Filtros</h1>
+                    <ul class="list-unstyled templatemo-accordion">
+                        <li class="pb-3">
+                            <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                                País de origem
+                                <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                            </a>
+                            <ul class="collapse show list-unstyled pl-3">
+                                @foreach (var pais in Enum.GetValues(typeof(Pais)).Cast<Pais>())
+                                {
+                                    <li><a class="text-decoration-none" href="#">@pais</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="pb-3">
+                            <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                                Tipo de produto
+                                <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                            </a>
+                            <ul id="collapseTwo" class="collapse list-unstyled pl-3">
+                                @foreach (var tipoProduto in Enum.GetValues(typeof(TipoProduto)).Cast<TipoProduto>())
+                                {
+                                    <li><a class="text-decoration-none" href="#">@tipoProduto</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-md-6 pb-4">
+                            <div class="d-flex">
+                                <select class="form-control">
+                                    <option>A-Z</option>
+                                    <option>Z-A</option>
+                                    <option>Menor preço</option>
+                                    <option>Maior preço</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            if (Model.Produtos.Any())
+                            {
+                                foreach (var produto in Model.Produtos)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card mb-4 product-wap rounded-0">
+                                            <div class="card rounded-0">
+                                                <img class="card-img rounded-0 img-fluid" src="@produto.ImagemUrl">
+                                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                                    <ul class="list-unstyled">
+                                                        <li><a class="btn btn-success text-white mt-2" href="/default/itemcatalogo/@produto.Id" title="Visualizar"><i class="far fa-eye fa-fw"></i></a></li>
+
+                                                        <form method="post">
+                                                            <button type="submit" class="btn btn-success text-white mt-2" asp-page-handler="carrinho" name="produtoId" value="@produto.Id" title="Incluir carrinho">
+                                                                <i class="fas fa-cart-plus fa-fw"></i>
+                                                            </button>
+                                                        </form>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <a href="shop-single.html" class="h3 text-decoration-none">@produto.Nome</a>
+                                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                                    <li class="pt-2">
+                                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                                    </li>
+                                                </ul>
+                                                <p class="text-center mb-0">R$@produto.ValorTotal</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <div div="row">
+                        <ul class="pagination pagination-lg justify-content-end">
+                            <li class="page-item disabled">
+                                <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Destaques</h1>
+                    <p>
+                        ...
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-4 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="https://dummyimage.com/600x800/000/fff.jpg&text=600x800" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

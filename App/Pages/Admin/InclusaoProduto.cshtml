@@ -1,0 +1,216 @@
+﻿@page "{standId:Guid}"
+
+@model App.Pages.Admin.InclusaoProdutoModel
+
+@using App.Enums;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> signInManager
+
+@{
+    ViewData["Title"] = "Incluir Produto";
+}
+
+<body>
+    <div class="container">
+        <div>
+
+            <h1 class="mt-3 mb-3 h3">Incluir Produto</h1>
+
+            <div class="hr-sect">GERAL</div>
+
+            <form method="post">
+                <input type="hidden" asp-for="StandId">
+                <section>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Nome</span>
+                        <input type="text" class="form-control" id="nome" aria-label="Nome" asp-for="ProdutoViewModel.Nome" required>
+                        <span class="text-danger" asp-validation-for="ProdutoViewModel.Nome"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <div class="card">
+                                <img src="https://dummyimage.com/500x600/000/fff&text=500x600" id="imagemDisplay" style="display:block" />
+                                <div class="card-body">
+                                    <input class="mt-2" type="file" id="escolherImagem">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 mb-3">
+                            <textarea class="form-control" id="descricao" asp-for="ProdutoViewModel.Descricao" placeholder="Descrição" required></textarea>
+                            <span class="text-danger" asp-validation-for="ProdutoViewModel.Descricao"></span>
+
+                            <div class="input-group mt-3">
+                                <span class="input-group-text">Imagem URL</span>
+                                <input type="text" class="form-control" aria-label="Imagem URL" id="imagemUrl" asp-for="ProdutoViewModel.ImagemUrl" required readonly>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="hr-sect">ESPECIFICAÇÃO</div>
+
+                <section>
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Valor Total</span>
+                                <span class="input-group-text">R$</span>
+                                <input type="number" class="form-control" id="valorTotal" value="0.00" min="0" step="any" asp-for="ProdutoViewModel.ValorTotal" required>
+                                <span class="text-danger" asp-validation-for="ProdutoViewModel.ValorTotal"></span>
+                            </div>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for="paisOrigem">País origem</label>
+
+                                @{
+                                    var itens = new List<SelectListItem>();
+
+                                    itens = Enum.GetValues(typeof(Pais)).Cast<Pais>().ToList().ConvertAll(a =>
+                                    {
+                                        return new SelectListItem()
+                                        {
+                                            Text = a.ObterDescricao(),
+                                            Value = a.ToString(),
+                                            Selected = false
+                                        };
+                                    });
+
+                                    <select class="form-select" id="paisOrigem" asp-items="@itens">
+                                        <option selected>Nenhum...</option>
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for="categoria">Categoria</label>
+
+                                @{
+                                    itens = new List<SelectListItem>();
+
+                                    itens = Enum.GetValues(typeof(Categoria)).Cast<Categoria>().Skip(1).ToList().ConvertAll(a =>
+                                    {
+                                        return new SelectListItem()
+                                        {
+                                            Text = a.ObterDescricao(),
+                                            Value = a.ToString(),
+                                            Selected = false
+                                        };
+                                    });
+
+                                    <select class="form-select" id="categoria" asp-items="@itens" asp-for="ProdutoViewModel.Categoria">
+                                        <option selected>Nenhum...</option>
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Quantidade</span>
+                                <input type="number" class="form-control" id="quantidade" value="0" min="0" step="any" asp-for="ProdutoViewModel.QuantidadeTotal" required>
+                                <span class="text-danger" asp-validation-for="ProdutoViewModel.QuantidadeTotal"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Comprimento</span>
+                                <input type="number" class="form-control" id="comprimento" value="0.00" min="0" step="any" asp-for="ProdutoViewModel.Comprimento" required>
+                                <span class="text-danger" asp-validation-for="ProdutoViewModel.Comprimento"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Largura</span>
+                                <input type="number" class="form-control" id="largura" value="0.00" min="0" step="any" asp-for="ProdutoViewModel.Largura" required>
+                                <span class="text-danger" asp-validation-for="ProdutoViewModel.Largura"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Altura</span>
+                                <input type="number" class="form-control" step="any" value="0.00" min="0" id="altura" asp-for="ProdutoViewModel.Altura" required>
+                                <span class="text-danger" asp-validation-for="ProdutoViewModel.Altura"></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="hr-sect">AUDITORIA</div>
+
+                <section>
+                    <div class="row mb-3">
+                        <div class="col-8">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Usuário inclusão</span>
+                                <input type="text" readonly class="form-control" id="usuarioInclusao" asp-for="ProdutoViewModel.UsuarioInclusao">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Usuário alteração</span>
+                                <input type="text" class="form-control" id="usuarioAlteracao" asp-for="ProdutoViewModel.UsuarioAlteracao" readonly>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Data inclusão</span>
+                                <input type="datetime" class="form-control" id="dataInclusao" asp-for="ProdutoViewModel.DataInclusao" readonly>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Data alteração</span>
+                                <input type="datetime" class="form-control" id="dataAlteracao" asp-for="ProdutoViewModel.DataAlteracao" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section>
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <button id="btnSalvar" class="btn btn-success btn-md center-block" Style="width: 100px;">Salvar</button>
+                            <a id="btnCancelar" class="btn btn-danger btn-md center-block" href="/admin/gerenciamentoproduto/@Model.StandId" Style="width: 100px;" role="button">Cancelar</a>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+</body>
+
+@section Scripts{
+    <script>
+        var editor = new FroalaEditor('#descricao', {
+            height: 420
+        });
+
+        const escolherImagemElement = document.getElementById('escolherImagem');
+        const imagemUrlElement = document.getElementById('imagemUrl');
+        const imagemDisplayElement = document.getElementById('imagemDisplay');
+
+        async function uploadFeaturesImage(e) {
+            console.log(e.target.files[0]);
+
+            let data = new FormData();
+            data.append('imagem', e.target.files[0])
+
+            await fetch('/api/imagem', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*'
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    imagemUrlElement.value = result.link;
+                    imagemDisplayElement.style.display = 'block';
+                    imagemDisplayElement.src = result.link;
+                })
+        }
+
+        escolherImagemElement.addEventListener('change', uploadFeaturesImage);
+    </script>
+}

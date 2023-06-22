@@ -1,0 +1,193 @@
+﻿@page "{id:Guid}"
+
+@using System.Text.RegularExpressions;
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<IdentityUser> userManager
+
+@model App.Pages.Default.ItemCatalogoModel
+@{
+    ViewData["Title"] = "Item Catálogo";
+}
+
+<body>
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                @{
+                    if (Model.Produto != null)
+                    {
+                        var produto = Model.Produto;
+
+                        <div class="col-lg-5 mt-5">
+                            <div class="card mb-3">
+                                <img class="card-img img-fluid" src="@produto.ImagemUrl" alt="Card image cap" id="product-detail">
+                            </div>
+                        </div>
+                        <div class="col-lg-7 mt-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h1 class="h2">@produto.Nome</h1>
+                                    <p class="h3 py-2">R$@produto.ValorTotal</p>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <h6>País Origem:</h6>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <p class="text-muted"><strong>@produto.PaisOrigem</strong></p>
+                                        </li>
+                                    </ul>
+                                    <h6>Descrição:</h6>
+                                    <p>@Regex.Replace(produto.Descricao, "<.*?>", string.Empty)</p>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <h6>Material:</h6>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <p class="text-muted"><strong>Madeira</strong></p>
+                                        </li>
+                                    </ul>
+                                    <h6>Specificação:</h6>
+                                    <ul class="list-unstyled pb-3">
+                                        <li>@produto.Largura (L) x @produto.Comprimento (C) x @produto.Altura (A)</li>
+                                    </ul>
+                                    <form action="" method="post">
+                                        <input type="hidden" asp-for="ItemCatalogoViewModel.ProdutoId" value="@Model.Produto.Id">
+                                        <input type="hidden" asp-for="ItemCatalogoViewModel.ValorTotal" value="@Model.Produto.ValorAtual">
+
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="">
+                                                            <span class="fa fa-plus"></span>
+                                                        </button>
+                                                    </span>
+                                                    <input type="number" id="quantidade" asp-for="ItemCatalogoViewModel.Quantidade" class="form-control input-number" value="1" min="1" max="100" required>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                                                            <span class="fa fa-plus"></span>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row pb-3 mt-5">
+                                            <div class="col d-grid">
+                                                <button type="submit" class="btn btn-success btn-lg" name="submit" asp-page-handler="reservar">Reservar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            @if (Model.ProdutosRelacionados.Any())
+            {
+                <div class="row text-left p-2 pb-3">
+                    <h4>Produtos Relacionados</h4>
+                </div>
+
+                <div id="carousel-related-product">
+                    <div class="p-2 pb-3">
+                        <div class="product-wap card rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="https://dummyimage.com/500x600/000/fff&text=500x600">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li>M/L/X/XL</li>
+                                    <li class="pt-2">
+                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                    </li>
+                                </ul>
+                                <p class="text-center mb-0">$20.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row text-left p-2 pb-3">
+                    <h4>Não existem produtos relacionados.</h4>
+                </div>
+            }
+        </div>
+    </section>
+</body>
+
+@section Scripts {
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }
+            ]
+        });
+
+        $(document).ready(function () {
+
+            var quantitiy = 0;
+            $('.quantity-right-plus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantidade').val());
+
+                $('#quantidade').val(quantity + 1);
+            });
+
+            $('.quantity-left-minus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantidade').val());
+
+                if (quantity > 0) {
+                    $('#quantidade').val(quantity - 1);
+                }
+            });
+
+        });
+    </script>
+}
